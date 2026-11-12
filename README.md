@@ -45,4 +45,27 @@ Todas las causas están en `CatalogoService.java`.
 
 ## Evidencia de depuración
 
-Pendiente: capturas del depurador con el punto de interrupción y los valores de las variables (paso 4 de la actividad).
+Se depuraron dos defectos en Spring Tools for Eclipse, ejecutando la prueba que los detecta con **Debug As → JUnit Test** sobre el código original, antes de corregirlo.
+
+### D-04: código duplicado (R5)
+
+- **Prueba depurada:** `codigoDuplicadoLanzaExcepcion`.
+- **Punto de interrupción:** `CatalogoService.java`, línea 29, `if (cursos.containsKey(codigo.toLowerCase()))`.
+- **Valores observados (vista Expressions):** `codigo.toLowerCase()` vale `jav-101` y `cursos.containsKey(codigo.toLowerCase())` vale `false`.
+- **Conclusión:** el servicio busca la clave en minúsculas (`jav-101`), pero los cursos se guardan con el código tal como llega (`JAV-101`). La clave nunca coincide, por eso el duplicado no se detecta.
+
+![Depuración del defecto D-04](docs/capturas/d04-depuracion.png)
+
+### D-07: descuento grupal (R8)
+
+- **Prueba depurada:** `precioGrupalAplicaDescuentoDesdeTresEstudiantes`, en el caso de 3 estudiantes.
+- **Punto de interrupción:** `CatalogoService.java`, línea 57, `if (estudiantes > 3)`.
+- **Valores observados (vista Variables):** `estudiantes` vale `3` y `total` vale `300.00` (`intCompact = 30000`, `scale = 2`).
+
+![Depuración del defecto D-07: parada en la condición](docs/capturas/d07-depuracion-condicion.png)
+
+Al avanzar un paso (Step Over), la ejecución salta de la línea 57 a la línea 60 (`return`) sin pasar por la línea 58, que es la que aplica el descuento. El `total` sigue en `300.00`.
+
+![Depuración del defecto D-07: salta al return sin aplicar el descuento](docs/capturas/d07-depuracion-resultado.png)
+
+- **Conclusión:** con 3 estudiantes la condición `3 > 3` es falsa, así que el descuento solo se aplica desde 4 estudiantes. La regla lo exige desde 3.
