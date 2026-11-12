@@ -43,6 +43,18 @@ Todas las causas están en `CatalogoService.java`.
 | D-06 | R7 | `inscribirConCupoLlenoLanzaExcepcion` | Con cupo 5 y 5 inscritos, una inscripción más lanza `IllegalStateException` | No se lanza ninguna excepción y el curso queda con 6 inscritos | **Causa:** en `inscribir` la condición es `curso.getInscritos() > curso.getCupo()`; con 5 inscritos y cupo 5 es falsa y deja pasar un estudiante de más. **Corrección:** cambiar a `>=`. |
 | D-07 | R8 | `precioGrupalAplicaDescuentoDesdeTresEstudiantes` (caso 3 estudiantes) | 3 × 100.00 con 15 % de descuento = `255.00` | `300.00` (sin descuento) | **Causa:** en `precioGrupal` la condición es `estudiantes > 3`, que aplica el descuento desde 4 estudiantes y no desde 3. **Corrección:** cambiar a `estudiantes >= 3`. |
 
+Cada defecto se corrigió en un commit propio, con el mensaje `fix(D-0X): descripción`, sin modificar las pruebas.
+
+## Resultado final
+
+Después de las siete correcciones, `./mvnw test` ejecuta 41 pruebas y todas pasan:
+
+| Clase de prueba | Ejecuciones | Qué verifica |
+|-----------------|-------------|--------------|
+| `CatalogoServiceTest` | 33 | Reglas R1 a R8 del servicio |
+| `CatalogoControllerTest` | 7 | Respuestas HTTP del controlador con `@WebMvcTest` y `@MockitoBean` (201, 200, 400 y 404) |
+| `CatalogoApplicationTests` | 1 | La aplicación arranca |
+
 ## Evidencia de depuración
 
 Se depuraron dos defectos en Spring Tools for Eclipse, ejecutando la prueba que los detecta con **Debug As → JUnit Test** sobre el código original, antes de corregirlo.
