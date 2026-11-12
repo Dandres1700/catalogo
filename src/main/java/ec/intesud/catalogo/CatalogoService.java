@@ -20,7 +20,7 @@ public class CatalogoService {
         if (nombre == null || nombre.isBlank()) {
             throw new IllegalArgumentException("El nombre es obligatorio");
         }
-        if (cupo < 5 || cupo >= 40) {
+        if (cupo < 5 || cupo > 40) {
             throw new IllegalArgumentException("Cupo fuera de rango: " + cupo);
         }
         if (precio == null || precio.signum() < 0) {
