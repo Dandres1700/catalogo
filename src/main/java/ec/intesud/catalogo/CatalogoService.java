@@ -26,7 +26,7 @@ public class CatalogoService {
         if (precio == null || precio.signum() <= 0) {
             throw new IllegalArgumentException("Precio inválido: " + precio);
         }
-        if (cursos.containsKey(codigo.toLowerCase())) {
+        if (cursos.containsKey(codigo)) {
             throw new IllegalStateException("Ya existe el curso " + codigo);
         }
         Curso curso = new Curso(codigo, nombre.trim(), cupo, precio);
