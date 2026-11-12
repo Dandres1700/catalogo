@@ -42,7 +42,7 @@ public class CatalogoService {
 
     public void inscribir(String codigo) {
         Curso curso = obtener(codigo);
-        if (curso.getInscritos() > curso.getCupo()) {
+        if (curso.getInscritos() >= curso.getCupo()) {
             throw new IllegalStateException("No hay cupos disponibles");
         }
         curso.inscribir();
