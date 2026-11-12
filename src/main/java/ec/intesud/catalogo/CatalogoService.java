@@ -23,7 +23,7 @@ public class CatalogoService {
         if (cupo < 5 || cupo > 40) {
             throw new IllegalArgumentException("Cupo fuera de rango: " + cupo);
         }
-        if (precio == null || precio.signum() < 0) {
+        if (precio == null || precio.signum() <= 0) {
             throw new IllegalArgumentException("Precio inválido: " + precio);
         }
         if (cursos.containsKey(codigo.toLowerCase())) {
