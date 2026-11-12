@@ -17,7 +17,7 @@ public class CatalogoService {
         if (codigo == null || !FORMATO_CODIGO.matcher(codigo).matches()) {
             throw new IllegalArgumentException("Código inválido: " + codigo);
         }
-        if (nombre == null || nombre.isEmpty()) {
+        if (nombre == null || nombre.isBlank()) {
             throw new IllegalArgumentException("El nombre es obligatorio");
         }
         if (cupo < 5 || cupo >= 40) {
