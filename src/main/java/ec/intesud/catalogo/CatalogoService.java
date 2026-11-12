@@ -54,7 +54,7 @@ public class CatalogoService {
         }
         Curso curso = obtener(codigo);
         BigDecimal total = curso.getPrecio().multiply(BigDecimal.valueOf(estudiantes));
-        if (estudiantes > 3) {
+        if (estudiantes >= 3) {
             total = total.multiply(new BigDecimal("0.85"));
         }
         return total.setScale(2, RoundingMode.HALF_UP);
